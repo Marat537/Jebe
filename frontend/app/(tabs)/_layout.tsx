@@ -33,9 +33,9 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="discover"
         options={{
-          title: '推荐视频',
+          title: '好友',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="compass" size={size} color={color} />
+            <Ionicons name="people" size={size} color={color} />
           ),
         }}
       />
