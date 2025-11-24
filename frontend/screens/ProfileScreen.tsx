@@ -134,7 +134,7 @@ export default function ProfileScreen() {
 
         <View style={[styles.settingsSection, { backgroundColor: colors.card }]}>
           <TouchableOpacity 
-            style={[styles.settingItem, { borderBottomColor: borderColor }]}
+            style={[styles.settingItem, { borderBottomColor: colors.border }]}
             activeOpacity={0.7}
             onPress={() => handleSettingPress('通知')}
           >
@@ -146,7 +146,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            style={[styles.settingItem, { borderBottomColor: borderColor }]}
+            style={[styles.settingItem, { borderBottomColor: colors.border }]}
             activeOpacity={0.7}
             onPress={() => handleSettingPress('隐私')}
           >
@@ -157,7 +157,7 @@ export default function ProfileScreen() {
             <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
           </TouchableOpacity>
 
-          <View style={[styles.settingItem, { borderBottomColor: borderColor }]}>
+          <View style={[styles.settingItem, { borderBottomColor: colors.border }]}>
             <View style={styles.settingLeft}>
               <Ionicons name="moon-outline" size={24} color={colors.text} />
               <Text style={[styles.settingText, { color: colors.text }]}>夜间模式</Text>
@@ -171,7 +171,7 @@ export default function ProfileScreen() {
           </View>
 
           <TouchableOpacity 
-            style={[styles.settingItem, { borderBottomColor: borderColor }]}
+            style={[styles.settingItem, { borderBottomColor: colors.border }]}
             activeOpacity={0.7}
             onPress={() => handleSettingPress('帮助与支持')}
           >
