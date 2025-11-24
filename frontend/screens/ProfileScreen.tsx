@@ -34,9 +34,9 @@ export default function ProfileScreen() {
     );
   };
 
-  const toggleDarkMode = () => {
+  const handleToggleTheme = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setIsDarkMode(!isDarkMode);
+    toggleTheme();
   };
 
   const handleMenuPress = () => {
