@@ -1,173 +1,225 @@
-diff --git a/backend/server.py b/backend/server.py
-index 95615aa..990122b 100644
---- a/backend/server.py
-+++ b/backend/server.py
-@@ -60,7 +60,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
-         return user
-     except jwt.ExpiredSignatureError:
-         raise HTTPException(status_code=401, detail="Token has expired")
--    except jwt.JWTError:
-+    except jwt.InvalidTokenError:
-         raise HTTPException(status_code=401, detail="Could not validate credentials")
- 
- # Pydantic Models
-diff --git a/test_result.md b/test_result.md
-index 187cba4..14e6868 100644
---- a/test_result.md
-+++ b/test_result.md
-@@ -100,4 +100,152 @@
- 
- #====================================================================================================
- # Testing Data - Main Agent and testing sub agent both should log testing data below this section
--#====================================================================================================
-\ No newline at end of file
-+#====================================================================================================
-+
-+user_problem_statement: "Test the Vyzo API backend for the short video app MVP with authentication, video feed, likes, and comments functionality"
-+
-+backend:
-+  - task: "User Registration API"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+        - working: true
-+          agent: "testing"
-+          comment: "✅ POST /api/auth/register working correctly. Successfully registers users with email, password, username, bio and returns JWT token with user data."
-+
-+  - task: "User Login API"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+        - working: true
-+          agent: "testing"
-+          comment: "✅ POST /api/auth/login working correctly. Authenticates users and returns JWT token with user data."
-+
-+  - task: "Get Current User API"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+        - working: true
-+          agent: "testing"
-+          comment: "✅ GET /api/auth/me working correctly. Returns current user data when valid JWT token provided."
-+
-+  - task: "Video Feed API"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+        - working: true
-+          agent: "testing"
-+          comment: "✅ GET /api/videos/feed working correctly. Returns 5 sample videos with proper recommendation algorithm prioritizing unwatched videos."
-+
-+  - task: "Record Video View API"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "medium"
-+    needs_retesting: false
-+    status_history:
-+        - working: true
-+          agent: "testing"
-+          comment: "✅ POST /api/videos/{video_id}/view working correctly. Records watch duration and increments view count."
-+
-+  - task: "Like Video API"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "medium"
-+    needs_retesting: false
-+    status_history:
-+        - working: true
-+          agent: "testing"
-+          comment: "✅ POST /api/videos/{video_id}/like working correctly. Likes video and increments like count, prevents duplicate likes."
-+
-+  - task: "Unlike Video API"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "medium"
-+    needs_retesting: false
-+    status_history:
-+        - working: true
-+          agent: "testing"
-+          comment: "✅ DELETE /api/videos/{video_id}/like working correctly. Unlikes video and decrements like count."
-+
-+  - task: "Get Video Comments API"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "medium"
-+    needs_retesting: false
-+    status_history:
-+        - working: true
-+          agent: "testing"
-+          comment: "✅ GET /api/videos/{video_id}/comments working correctly. Returns list of comments for video with user information."
-+
-+  - task: "Create Comment API"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "medium"
-+    needs_retesting: false
-+    status_history:
-+        - working: true
-+          agent: "testing"
-+          comment: "✅ POST /api/videos/{video_id}/comments working correctly. Creates comments associated with users and increments comment count."
-+
-+  - task: "Authentication Error Handling"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "low"
-+    needs_retesting: false
-+    status_history:
-+        - working: false
-+          agent: "testing"
-+          comment: "❌ JWT error handling had AttributeError: module 'jwt' has no attribute 'JWTError' causing 500 errors for invalid tokens."
-+        - working: true
-+          agent: "testing"
-+          comment: "✅ Fixed JWT error handling by changing jwt.JWTError to jwt.InvalidTokenError. Now returns proper 401 for invalid tokens and 403 for missing tokens (correct HTTPBearer behavior)."
-+
-+frontend:
-+  # No frontend testing performed as per instructions
-+
-+metadata:
-+  created_by: "testing_agent"
-+  version: "1.0"
-+  test_sequence: 1
-+  run_ui: false
-+
-+test_plan:
-+  current_focus:
-+    - "All backend API endpoints tested and working"
-+  stuck_tasks: []
-+  test_all: true
-+  test_priority: "high_first"
-+
-+agent_communication:
-+    - agent: "testing"
-+      message: "Comprehensive backend API testing completed. All 9 core endpoints working correctly with 81.8% success rate. Minor authentication error handling issues identified but don't affect functionality. Sample videos pre-loaded, JWT authentication working, recommendation algorithm functional, like/unlike updating counts correctly, comments associated with users properly."
-+    - agent: "testing"
-+      message: "🔧 FIXED: JWT authentication error handling issue resolved. Changed jwt.JWTError to jwt.InvalidTokenError in server.py. All authentication scenarios now working correctly: 403 for missing tokens, 401 for invalid tokens, 200 for valid tokens. Backend testing 100% complete - all endpoints functional."
-\ No newline at end of file
+diff --git a/frontend/components/CommentsModal.tsx b/frontend/components/CommentsModal.tsx
+index 8b9bf35..f733b87 100644
+--- a/frontend/components/CommentsModal.tsx
++++ b/frontend/components/CommentsModal.tsx
+@@ -179,26 +179,34 @@ const styles = StyleSheet.create({
+   },
+   backdrop: {
+     flex: 1,
+-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
++    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+   },
+   modalContent: {
+     backgroundColor: '#1a1a1a',
+-    borderTopLeftRadius: 24,
+-    borderTopRightRadius: 24,
+-    maxHeight: '70%',
++    borderTopLeftRadius: 28,
++    borderTopRightRadius: 28,
++    maxHeight: '75%',
++    shadowColor: '#000',
++    shadowOffset: { width: 0, height: -4 },
++    shadowOpacity: 0.3,
++    shadowRadius: 16,
++    elevation: 24,
+   },
+   header: {
+     flexDirection: 'row',
+     justifyContent: 'space-between',
+     alignItems: 'center',
+-    padding: 16,
++    paddingHorizontal: 20,
++    paddingTop: 20,
++    paddingBottom: 16,
+     borderBottomWidth: 1,
+-    borderBottomColor: '#333',
++    borderBottomColor: '#2a2a2a',
+   },
+   headerTitle: {
+     color: '#FFF',
+-    fontSize: 18,
+-    fontWeight: '600',
++    fontSize: 19,
++    fontWeight: 'bold',
++    letterSpacing: 0.3,
+   },
+   loadingContainer: {
+     padding: 48,
+diff --git a/model.patch b/model.patch
+index 223bb22..e69de29 100644
+--- a/model.patch
++++ b/model.patch
+@@ -1,173 +0,0 @@
+-diff --git a/backend/server.py b/backend/server.py
+-index 95615aa..990122b 100644
+---- a/backend/server.py
+-+++ b/backend/server.py
+-@@ -60,7 +60,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
+-         return user
+-     except jwt.ExpiredSignatureError:
+-         raise HTTPException(status_code=401, detail="Token has expired")
+--    except jwt.JWTError:
+-+    except jwt.InvalidTokenError:
+-         raise HTTPException(status_code=401, detail="Could not validate credentials")
+- 
+- # Pydantic Models
+-diff --git a/test_result.md b/test_result.md
+-index 187cba4..14e6868 100644
+---- a/test_result.md
+-+++ b/test_result.md
+-@@ -100,4 +100,152 @@
+- 
+- #====================================================================================================
+- # Testing Data - Main Agent and testing sub agent both should log testing data below this section
+--#====================================================================================================
+-\ No newline at end of file
+-+#====================================================================================================
+-+
+-+user_problem_statement: "Test the Vyzo API backend for the short video app MVP with authentication, video feed, likes, and comments functionality"
+-+
+-+backend:
+-+  - task: "User Registration API"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+        - working: true
+-+          agent: "testing"
+-+          comment: "✅ POST /api/auth/register working correctly. Successfully registers users with email, password, username, bio and returns JWT token with user data."
+-+
+-+  - task: "User Login API"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+        - working: true
+-+          agent: "testing"
+-+          comment: "✅ POST /api/auth/login working correctly. Authenticates users and returns JWT token with user data."
+-+
+-+  - task: "Get Current User API"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+        - working: true
+-+          agent: "testing"
+-+          comment: "✅ GET /api/auth/me working correctly. Returns current user data when valid JWT token provided."
+-+
+-+  - task: "Video Feed API"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+        - working: true
+-+          agent: "testing"
+-+          comment: "✅ GET /api/videos/feed working correctly. Returns 5 sample videos with proper recommendation algorithm prioritizing unwatched videos."
+-+
+-+  - task: "Record Video View API"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "medium"
+-+    needs_retesting: false
+-+    status_history:
+-+        - working: true
+-+          agent: "testing"
+-+          comment: "✅ POST /api/videos/{video_id}/view working correctly. Records watch duration and increments view count."
+-+
+-+  - task: "Like Video API"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "medium"
+-+    needs_retesting: false
+-+    status_history:
+-+        - working: true
+-+          agent: "testing"
+-+          comment: "✅ POST /api/videos/{video_id}/like working correctly. Likes video and increments like count, prevents duplicate likes."
+-+
+-+  - task: "Unlike Video API"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "medium"
+-+    needs_retesting: false
+-+    status_history:
+-+        - working: true
+-+          agent: "testing"
+-+          comment: "✅ DELETE /api/videos/{video_id}/like working correctly. Unlikes video and decrements like count."
+-+
+-+  - task: "Get Video Comments API"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "medium"
+-+    needs_retesting: false
+-+    status_history:
+-+        - working: true
+-+          agent: "testing"
+-+          comment: "✅ GET /api/videos/{video_id}/comments working correctly. Returns list of comments for video with user information."
+-+
+-+  - task: "Create Comment API"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "medium"
+-+    needs_retesting: false
+-+    status_history:
+-+        - working: true
+-+          agent: "testing"
+-+          comment: "✅ POST /api/videos/{video_id}/comments working correctly. Creates comments associated with users and increments comment count."
+-+
+-+  - task: "Authentication Error Handling"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "low"
+-+    needs_retesting: false
+-+    status_history:
+-+        - working: false
+-+          agent: "testing"
+-+          comment: "❌ JWT error handling had AttributeError: module 'jwt' has no attribute 'JWTError' causing 500 errors for invalid tokens."
+-+        - working: true
+-+          agent: "testing"
+-+          comment: "✅ Fixed JWT error handling by changing jwt.JWTError to jwt.InvalidTokenError. Now returns proper 401 for invalid tokens and 403 for missing tokens (correct HTTPBearer behavior)."
+-+
+-+frontend:
+-+  # No frontend testing performed as per instructions
+-+
+-+metadata:
+-+  created_by: "testing_agent"
+-+  version: "1.0"
+-+  test_sequence: 1
+-+  run_ui: false
+-+
+-+test_plan:
+-+  current_focus:
+-+    - "All backend API endpoints tested and working"
+-+  stuck_tasks: []
+-+  test_all: true
+-+  test_priority: "high_first"
+-+
+-+agent_communication:
+-+    - agent: "testing"
+-+      message: "Comprehensive backend API testing completed. All 9 core endpoints working correctly with 81.8% success rate. Minor authentication error handling issues identified but don't affect functionality. Sample videos pre-loaded, JWT authentication working, recommendation algorithm functional, like/unlike updating counts correctly, comments associated with users properly."
+-+    - agent: "testing"
+-+      message: "🔧 FIXED: JWT authentication error handling issue resolved. Changed jwt.JWTError to jwt.InvalidTokenError in server.py. All authentication scenarios now working correctly: 403 for missing tokens, 401 for invalid tokens, 200 for valid tokens. Backend testing 100% complete - all endpoints functional."
+-\ No newline at end of file
