@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import VideoPlayer from '../components/VideoPlayer';
 import CommentsModal from '../components/CommentsModal';
+import VideoFeedHeader from '../components/VideoFeedHeader';
 import api from '../utils/api';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
