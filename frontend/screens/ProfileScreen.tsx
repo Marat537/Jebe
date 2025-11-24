@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,14 +9,13 @@ import {
   Switch,
 } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 
 export default function ProfileScreen() {
   const { user, logout } = useAuth();
-  const { isDarkMode, toggleTheme, colors } = useTheme();
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const handleLogout = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
