@@ -67,7 +67,7 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: bgColor }]} edges={['top']}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.menuButton}>
+        <TouchableOpacity style={styles.menuButton} onPress={handleMenuPress} activeOpacity={0.7}>
           <Ionicons name="menu" size={28} color={textColor} />
         </TouchableOpacity>
       </View>
@@ -81,23 +81,27 @@ export default function ProfileScreen() {
           <Text style={[styles.username, { color: textColor }]}>@{user?.username || 'user123'}</Text>
 
           <View style={styles.statsContainer}>
-            <View style={styles.statItem}>
+            <TouchableOpacity style={styles.statItem} activeOpacity={0.7} onPress={() => handleTabPress('关注')}>
               <Text style={[styles.statNumber, { color: textColor }]}>0</Text>
               <Text style={[styles.statLabel, { color: secondaryTextColor }]}>关注</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.statDivider} />
-            <View style={styles.statItem}>
+            <TouchableOpacity style={styles.statItem} activeOpacity={0.7} onPress={() => handleTabPress('粉丝')}>
               <Text style={[styles.statNumber, { color: textColor }]}>0</Text>
               <Text style={[styles.statLabel, { color: secondaryTextColor }]}>粉丝</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.statDivider} />
-            <View style={styles.statItem}>
+            <TouchableOpacity style={styles.statItem} activeOpacity={0.7} onPress={() => handleTabPress('赞')}>
               <Text style={[styles.statNumber, { color: textColor }]}>0</Text>
               <Text style={[styles.statLabel, { color: secondaryTextColor }]}>赞</Text>
-            </View>
+            </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={[styles.editBioButton, { borderColor: borderColor }]}>
+          <TouchableOpacity 
+            style={[styles.editBioButton, { borderColor: borderColor }]} 
+            activeOpacity={0.7}
+            onPress={handleEditBio}
+          >
             <Ionicons name="add" size={16} color={secondaryTextColor} />
             <Text style={[styles.editBioText, { color: secondaryTextColor }]}>
               添加个人简介 · 
@@ -108,25 +112,29 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.tabsContainer}>
-          <TouchableOpacity style={styles.tab}>
+          <TouchableOpacity style={styles.tab} activeOpacity={0.7} onPress={() => handleTabPress('作品')}>
             <Ionicons name="grid-outline" size={24} color={textColor} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tab}>
+          <TouchableOpacity style={styles.tab} activeOpacity={0.7} onPress={() => handleTabPress('合集')}>
             <Ionicons name="albums-outline" size={24} color={secondaryTextColor} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tab}>
+          <TouchableOpacity style={styles.tab} activeOpacity={0.7} onPress={() => handleTabPress('转发')}>
             <Ionicons name="repeat-outline" size={24} color={secondaryTextColor} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tab}>
+          <TouchableOpacity style={styles.tab} activeOpacity={0.7} onPress={() => handleTabPress('收藏')}>
             <Ionicons name="bookmark-outline" size={24} color={secondaryTextColor} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tab}>
+          <TouchableOpacity style={styles.tab} activeOpacity={0.7} onPress={() => handleTabPress('扫一扫')}>
             <Ionicons name="scan-outline" size={24} color={secondaryTextColor} />
           </TouchableOpacity>
         </View>
 
         <View style={[styles.settingsSection, { backgroundColor: cardBgColor }]}>
-          <TouchableOpacity style={[styles.settingItem, { borderBottomColor: borderColor }]}>
+          <TouchableOpacity 
+            style={[styles.settingItem, { borderBottomColor: borderColor }]}
+            activeOpacity={0.7}
+            onPress={() => handleSettingPress('通知')}
+          >
             <View style={styles.settingLeft}>
               <Ionicons name="notifications-outline" size={24} color={textColor} />
               <Text style={[styles.settingText, { color: textColor }]}>通知</Text>
@@ -134,7 +142,11 @@ export default function ProfileScreen() {
             <Ionicons name="chevron-forward" size={20} color={secondaryTextColor} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.settingItem, { borderBottomColor: borderColor }]}>
+          <TouchableOpacity 
+            style={[styles.settingItem, { borderBottomColor: borderColor }]}
+            activeOpacity={0.7}
+            onPress={() => handleSettingPress('隐私')}
+          >
             <View style={styles.settingLeft}>
               <Ionicons name="shield-checkmark-outline" size={24} color={textColor} />
               <Text style={[styles.settingText, { color: textColor }]}>隐私</Text>
