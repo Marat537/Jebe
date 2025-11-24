@@ -401,6 +401,8 @@ async def create_comment(video_id: str, comment_data: CommentCreate, current_use
         "user_id": user_id,
         "video_id": video_id,
         "text": comment_data.text,
+        "image": comment_data.image,
+        "likes_count": 0,
         "created_at": datetime.utcnow()
     }
     
@@ -412,13 +414,200 @@ async def create_comment(video_id: str, comment_data: CommentCreate, current_use
         {"$inc": {"comments_count": 1}}
     )
     
+    # Create notification for video owner
+    video = await db.videos.find_one({"_id": ObjectId(video_id)})
+    if video:
+        await db.notifications.insert_one({
+            "_id": ObjectId(),
+            "user_id": video.get("author_id", ""),
+            "type": "comment",
+            "from_user_id": user_id,
+            "from_username": current_user["username"],
+            "content": f"评论了你的视频",
+            "video_id": video_id,
+            "read": False,
+            "created_at": datetime.utcnow()
+        })
+    
     return CommentResponse(
         id=str(comment_dict["_id"]),
         user_id=user_id,
         username=current_user["username"],
         text=comment_dict["text"],
+        image=comment_dict.get("image"),
+        likes_count=0,
+        is_liked=False,
         created_at=comment_dict["created_at"]
     )
+
+# Comment Like Routes
+@api_router.post("/comments/{comment_id}/like")
+async def like_comment(comment_id: str, current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
+    
+    # Check if already liked
+    existing_like = await db.comment_likes.find_one({"user_id": user_id, "comment_id": comment_id})
+    if existing_like:
+        raise HTTPException(status_code=400, detail="Already liked")
+    
+    # Create like
+    await db.comment_likes.insert_one({
+        "_id": ObjectId(),
+        "user_id": user_id,
+        "comment_id": comment_id,
+        "created_at": datetime.utcnow()
+    })
+    
+    # Increment like count
+    await db.comments.update_one(
+        {"_id": ObjectId(comment_id)},
+        {"$inc": {"likes_count": 1}}
+    )
+    
+    return {"success": True}
+
+@api_router.delete("/comments/{comment_id}/like")
+async def unlike_comment(comment_id: str, current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
+    
+    # Remove like
+    result = await db.comment_likes.delete_one({"user_id": user_id, "comment_id": comment_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=400, detail="Not liked")
+    
+    # Decrement like count
+    await db.comments.update_one(
+        {"_id": ObjectId(comment_id)},
+        {"$inc": {"likes_count": -1}}
+    )
+    
+    return {"success": True}
+
+# Message Routes
+@api_router.get("/messages", response_model=List[MessageResponse])
+async def get_messages(current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
+    
+    messages = await db.messages.find({
+        "$or": [
+            {"sender_id": user_id},
+            {"receiver_id": user_id}
+        ]
+    }).sort("created_at", -1).to_list(1000)
+    
+    result = []
+    for msg in messages:
+        sender = await db.users.find_one({"_id": ObjectId(msg["sender_id"])})
+        result.append(MessageResponse(
+            id=str(msg["_id"]),
+            sender_id=msg["sender_id"],
+            sender_username=sender["username"] if sender else "Unknown",
+            receiver_id=msg["receiver_id"],
+            text=msg["text"],
+            image=msg.get("image"),
+            read=msg.get("read", False),
+            created_at=msg["created_at"]
+        ))
+    
+    return result
+
+@api_router.post("/messages", response_model=MessageResponse)
+async def send_message(message_data: MessageCreate, current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
+    
+    message_dict = {
+        "_id": ObjectId(),
+        "sender_id": user_id,
+        "receiver_id": message_data.receiver_id,
+        "text": message_data.text,
+        "image": message_data.image,
+        "read": False,
+        "created_at": datetime.utcnow()
+    }
+    
+    await db.messages.insert_one(message_dict)
+    
+    return MessageResponse(
+        id=str(message_dict["_id"]),
+        sender_id=user_id,
+        sender_username=current_user["username"],
+        receiver_id=message_data.receiver_id,
+        text=message_dict["text"],
+        image=message_dict.get("image"),
+        read=False,
+        created_at=message_dict["created_at"]
+    )
+
+# Notification Routes
+@api_router.get("/notifications", response_model=List[NotificationResponse])
+async def get_notifications(current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
+    
+    notifications = await db.notifications.find({"user_id": user_id}).sort("created_at", -1).to_list(1000)
+    
+    return [NotificationResponse(
+        id=str(notif["_id"]),
+        type=notif["type"],
+        from_user_id=notif["from_user_id"],
+        from_username=notif["from_username"],
+        content=notif["content"],
+        video_id=notif.get("video_id"),
+        read=notif.get("read", False),
+        created_at=notif["created_at"]
+    ) for notif in notifications]
+
+@api_router.post("/notifications/{notification_id}/read")
+async def mark_notification_read(notification_id: str, current_user = Depends(get_current_user)):
+    await db.notifications.update_one(
+        {"_id": ObjectId(notification_id)},
+        {"$set": {"read": True}}
+    )
+    return {"success": True}
+
+# Follow Routes
+@api_router.post("/users/{user_id}/follow")
+async def follow_user(user_id: str, current_user = Depends(get_current_user)):
+    follower_id = str(current_user["_id"])
+    
+    if follower_id == user_id:
+        raise HTTPException(status_code=400, detail="Cannot follow yourself")
+    
+    # Check if already following
+    existing = await db.follows.find_one({"follower_id": follower_id, "following_id": user_id})
+    if existing:
+        raise HTTPException(status_code=400, detail="Already following")
+    
+    # Create follow
+    await db.follows.insert_one({
+        "_id": ObjectId(),
+        "follower_id": follower_id,
+        "following_id": user_id,
+        "created_at": datetime.utcnow()
+    })
+    
+    # Create notification
+    await db.notifications.insert_one({
+        "_id": ObjectId(),
+        "user_id": user_id,
+        "type": "follow",
+        "from_user_id": follower_id,
+        "from_username": current_user["username"],
+        "content": "关注了你",
+        "read": False,
+        "created_at": datetime.utcnow()
+    })
+    
+    return {"success": True}
+
+@api_router.delete("/users/{user_id}/follow")
+async def unfollow_user(user_id: str, current_user = Depends(get_current_user)):
+    follower_id = str(current_user["_id"])
+    
+    result = await db.follows.delete_one({"follower_id": follower_id, "following_id": user_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=400, detail="Not following")
+    
+    return {"success": True}
 
 @api_router.get("/")
 async def root():
