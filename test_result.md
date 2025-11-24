@@ -221,9 +221,12 @@ backend:
     priority: "low"
     needs_retesting: false
     status_history:
+        - working: false
+          agent: "testing"
+          comment: "❌ JWT error handling had AttributeError: module 'jwt' has no attribute 'JWTError' causing 500 errors for invalid tokens."
         - working: true
           agent: "testing"
-          comment: "Minor: Authentication works correctly with valid tokens. Error handling returns 403 for missing tokens and 500 for invalid tokens instead of standard 401, but core functionality is unaffected."
+          comment: "✅ Fixed JWT error handling by changing jwt.JWTError to jwt.InvalidTokenError. Now returns proper 401 for invalid tokens and 403 for missing tokens (correct HTTPBearer behavior)."
 
 frontend:
   # No frontend testing performed as per instructions
