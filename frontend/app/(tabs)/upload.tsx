@@ -2,22 +2,19 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../../contexts/ThemeContext';
 
 export default function Upload() {
-  const { colors } = useTheme();
-  
   const handleUpload = () => {
     Alert.alert('提示', '视频上传功能即将推出\n限制：一周1-2个视频');
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.content}>
-        <Ionicons name="cloud-upload-outline" size={80} color={colors.primary} />
-        <Text style={[styles.title, { color: colors.text }]}>上传视频</Text>
-        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>一周限制 1-2 个视频</Text>
-        <TouchableOpacity style={[styles.uploadButton, { backgroundColor: colors.primary }]} onPress={handleUpload}>
+        <Ionicons name="cloud-upload-outline" size={80} color="#5B4FFF" />
+        <Text style={styles.title}>上传视频</Text>
+        <Text style={styles.subtitle}>一周限制 1-2 个视频</Text>
+        <TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>
           <Text style={styles.uploadButtonText}>选择视频</Text>
         </TouchableOpacity>
       </View>
