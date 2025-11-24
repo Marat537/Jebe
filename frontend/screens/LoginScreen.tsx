@@ -363,4 +363,14 @@ const styles = StyleSheet.create({
     color: '#CCC',
     fontSize: 11,
   },
+  switchModeButton: {
+    alignItems: 'center',
+    paddingVertical: 12,
+    marginTop: 8,
+  },
+  switchModeText: {
+    color: '#5B4FFF',
+    fontSize: 14,
+    fontWeight: '500',
+  },
 });
