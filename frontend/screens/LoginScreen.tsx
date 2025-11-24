@@ -27,6 +27,7 @@ export default function LoginScreen({ onSwitchToRegister }: LoginScreenProps) {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [loginMode, setLoginMode] = useState<'phone' | 'email'>('phone');
 
   const handleLogin = async () => {
     if (!identifier || !password) {
