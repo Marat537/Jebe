@@ -1,302 +1,323 @@
-diff --git a/frontend/screens/ProfileScreen.tsx b/frontend/screens/ProfileScreen.tsx
-index cab67f5..389749e 100644
---- a/frontend/screens/ProfileScreen.tsx
-+++ b/frontend/screens/ProfileScreen.tsx
-@@ -167,7 +167,11 @@ export default function ProfileScreen() {
-             />
-           </View>
- 
--          <TouchableOpacity style={[styles.settingItem, { borderBottomColor: borderColor }]}>
-+          <TouchableOpacity 
-+            style={[styles.settingItem, { borderBottomColor: borderColor }]}
-+            activeOpacity={0.7}
-+            onPress={() => handleSettingPress('帮助与支持')}
-+          >
-             <View style={styles.settingLeft}>
-               <Ionicons name="help-circle-outline" size={24} color={textColor} />
-               <Text style={[styles.settingText, { color: textColor }]}>帮助与支持</Text>
-@@ -177,6 +181,7 @@ export default function ProfileScreen() {
- 
-           <TouchableOpacity 
-             style={[styles.settingItem, { borderBottomWidth: 0 }]}
-+            activeOpacity={0.7}
-             onPress={handleLogout}
-           >
-             <View style={styles.settingLeft}>
+diff --git a/frontend/app/(tabs)/_layout.tsx b/frontend/app/(tabs)/_layout.tsx
+index 4b2b945..56aabec 100644
+--- a/frontend/app/(tabs)/_layout.tsx
++++ b/frontend/app/(tabs)/_layout.tsx
+@@ -33,9 +33,9 @@ export default function TabsLayout() {
+       <Tabs.Screen
+         name="discover"
+         options={{
+-          title: '推荐视频',
++          title: '好友',
+           tabBarIcon: ({ color, size }) => (
+-            <Ionicons name="compass" size={size} color={color} />
++            <Ionicons name="people" size={size} color={color} />
+           ),
+         }}
+       />
 diff --git a/model.patch b/model.patch
-index e29efef..e69de29 100644
+index 529157a..e69de29 100644
 --- a/model.patch
 +++ b/model.patch
-@@ -1,272 +0,0 @@
--diff --git a/frontend/app/(tabs)/_layout.tsx b/frontend/app/(tabs)/_layout.tsx
--index f5576ff..4b2b945 100644
----- a/frontend/app/(tabs)/_layout.tsx
--+++ b/frontend/app/(tabs)/_layout.tsx
--@@ -49,11 +49,11 @@ export default function TabsLayout() {
--         }}
--       />
--       <Tabs.Screen
---        name="history"
--+        name="messages"
--         options={{
---          title: '相册历史',
--+          title: '消息',
--           tabBarIcon: ({ color, size }) => (
---            <Ionicons name="folder-open" size={size} color={color} />
--+            <Ionicons name="chatbubbles" size={size} color={color} />
--           ),
--         }}
--       />
--diff --git a/frontend/app/(tabs)/history.tsx b/frontend/app/(tabs)/messages.tsx
--similarity index 83%
--rename from frontend/app/(tabs)/history.tsx
--rename to frontend/app/(tabs)/messages.tsx
--index 64ccc9b..dc583b2 100644
----- a/frontend/app/(tabs)/history.tsx
--+++ b/frontend/app/(tabs)/messages.tsx
--@@ -2,12 +2,12 @@ import React from 'react';
-- import { View, Text, StyleSheet } from 'react-native';
-- import { SafeAreaView } from 'react-native-safe-area-context';
+@@ -1,302 +0,0 @@
+-diff --git a/frontend/screens/ProfileScreen.tsx b/frontend/screens/ProfileScreen.tsx
+-index cab67f5..389749e 100644
+---- a/frontend/screens/ProfileScreen.tsx
+-+++ b/frontend/screens/ProfileScreen.tsx
+-@@ -167,7 +167,11 @@ export default function ProfileScreen() {
+-             />
+-           </View>
 - 
---export default function History() {
--+export default function Messages() {
--   return (
--     <SafeAreaView style={styles.container} edges={['top']}>
--       <View style={styles.content}>
---        <Text style={styles.title}>相册历史</Text>
---        <Text style={styles.subtitle}>大型视频存储</Text>
--+        <Text style={styles.title}>消息</Text>
--+        <Text style={styles.subtitle}>聊天和通知</Text>
--         <Text style={styles.description}>即将推出...</Text>
--       </View>
--     </SafeAreaView>
+--          <TouchableOpacity style={[styles.settingItem, { borderBottomColor: borderColor }]}>
+-+          <TouchableOpacity 
+-+            style={[styles.settingItem, { borderBottomColor: borderColor }]}
+-+            activeOpacity={0.7}
+-+            onPress={() => handleSettingPress('帮助与支持')}
+-+          >
+-             <View style={styles.settingLeft}>
+-               <Ionicons name="help-circle-outline" size={24} color={textColor} />
+-               <Text style={[styles.settingText, { color: textColor }]}>帮助与支持</Text>
+-@@ -177,6 +181,7 @@ export default function ProfileScreen() {
+- 
+-           <TouchableOpacity 
+-             style={[styles.settingItem, { borderBottomWidth: 0 }]}
+-+            activeOpacity={0.7}
+-             onPress={handleLogout}
+-           >
+-             <View style={styles.settingLeft}>
 -diff --git a/model.patch b/model.patch
--index cff765a..e69de29 100644
+-index e29efef..e69de29 100644
 ---- a/model.patch
 -+++ b/model.patch
--@@ -1,225 +0,0 @@
---diff --git a/frontend/components/CommentsModal.tsx b/frontend/components/CommentsModal.tsx
---index 8b9bf35..f733b87 100644
------ a/frontend/components/CommentsModal.tsx
---+++ b/frontend/components/CommentsModal.tsx
---@@ -179,26 +179,34 @@ const styles = StyleSheet.create({
---   },
---   backdrop: {
---     flex: 1,
----    backgroundColor: 'rgba(0, 0, 0, 0.5)',
---+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
---   },
---   modalContent: {
---     backgroundColor: '#1a1a1a',
----    borderTopLeftRadius: 24,
----    borderTopRightRadius: 24,
----    maxHeight: '70%',
---+    borderTopLeftRadius: 28,
---+    borderTopRightRadius: 28,
---+    maxHeight: '75%',
---+    shadowColor: '#000',
---+    shadowOffset: { width: 0, height: -4 },
---+    shadowOpacity: 0.3,
---+    shadowRadius: 16,
---+    elevation: 24,
---   },
---   header: {
---     flexDirection: 'row',
---     justifyContent: 'space-between',
---     alignItems: 'center',
----    padding: 16,
---+    paddingHorizontal: 20,
---+    paddingTop: 20,
---+    paddingBottom: 16,
---     borderBottomWidth: 1,
----    borderBottomColor: '#333',
---+    borderBottomColor: '#2a2a2a',
---   },
---   headerTitle: {
---     color: '#FFF',
----    fontSize: 18,
----    fontWeight: '600',
---+    fontSize: 19,
---+    fontWeight: 'bold',
---+    letterSpacing: 0.3,
---   },
---   loadingContainer: {
---     padding: 48,
+-@@ -1,272 +0,0 @@
+--diff --git a/frontend/app/(tabs)/_layout.tsx b/frontend/app/(tabs)/_layout.tsx
+--index f5576ff..4b2b945 100644
+----- a/frontend/app/(tabs)/_layout.tsx
+--+++ b/frontend/app/(tabs)/_layout.tsx
+--@@ -49,11 +49,11 @@ export default function TabsLayout() {
+--         }}
+--       />
+--       <Tabs.Screen
+---        name="history"
+--+        name="messages"
+--         options={{
+---          title: '相册历史',
+--+          title: '消息',
+--           tabBarIcon: ({ color, size }) => (
+---            <Ionicons name="folder-open" size={size} color={color} />
+--+            <Ionicons name="chatbubbles" size={size} color={color} />
+--           ),
+--         }}
+--       />
+--diff --git a/frontend/app/(tabs)/history.tsx b/frontend/app/(tabs)/messages.tsx
+--similarity index 83%
+--rename from frontend/app/(tabs)/history.tsx
+--rename to frontend/app/(tabs)/messages.tsx
+--index 64ccc9b..dc583b2 100644
+----- a/frontend/app/(tabs)/history.tsx
+--+++ b/frontend/app/(tabs)/messages.tsx
+--@@ -2,12 +2,12 @@ import React from 'react';
+-- import { View, Text, StyleSheet } from 'react-native';
+-- import { SafeAreaView } from 'react-native-safe-area-context';
+-- 
+---export default function History() {
+--+export default function Messages() {
+--   return (
+--     <SafeAreaView style={styles.container} edges={['top']}>
+--       <View style={styles.content}>
+---        <Text style={styles.title}>相册历史</Text>
+---        <Text style={styles.subtitle}>大型视频存储</Text>
+--+        <Text style={styles.title}>消息</Text>
+--+        <Text style={styles.subtitle}>聊天和通知</Text>
+--         <Text style={styles.description}>即将推出...</Text>
+--       </View>
+--     </SafeAreaView>
 --diff --git a/model.patch b/model.patch
---index 223bb22..e69de29 100644
+--index cff765a..e69de29 100644
 ----- a/model.patch
 --+++ b/model.patch
---@@ -1,173 +0,0 @@
----diff --git a/backend/server.py b/backend/server.py
----index 95615aa..990122b 100644
------- a/backend/server.py
----+++ b/backend/server.py
----@@ -60,7 +60,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
----         return user
----     except jwt.ExpiredSignatureError:
----         raise HTTPException(status_code=401, detail="Token has expired")
-----    except jwt.JWTError:
----+    except jwt.InvalidTokenError:
----         raise HTTPException(status_code=401, detail="Could not validate credentials")
---- 
---- # Pydantic Models
----diff --git a/test_result.md b/test_result.md
----index 187cba4..14e6868 100644
------- a/test_result.md
----+++ b/test_result.md
----@@ -100,4 +100,152 @@
---- 
---- #====================================================================================================
---- # Testing Data - Main Agent and testing sub agent both should log testing data below this section
-----#====================================================================================================
----\ No newline at end of file
----+#====================================================================================================
----+
----+user_problem_statement: "Test the Vyzo API backend for the short video app MVP with authentication, video feed, likes, and comments functionality"
----+
----+backend:
----+  - task: "User Registration API"
----+    implemented: true
----+    working: true
----+    file: "/app/backend/server.py"
----+    stuck_count: 0
----+    priority: "high"
----+    needs_retesting: false
----+    status_history:
----+        - working: true
----+          agent: "testing"
----+          comment: "✅ POST /api/auth/register working correctly. Successfully registers users with email, password, username, bio and returns JWT token with user data."
----+
----+  - task: "User Login API"
----+    implemented: true
----+    working: true
----+    file: "/app/backend/server.py"
----+    stuck_count: 0
----+    priority: "high"
----+    needs_retesting: false
----+    status_history:
----+        - working: true
----+          agent: "testing"
----+          comment: "✅ POST /api/auth/login working correctly. Authenticates users and returns JWT token with user data."
----+
----+  - task: "Get Current User API"
----+    implemented: true
----+    working: true
----+    file: "/app/backend/server.py"
----+    stuck_count: 0
----+    priority: "high"
----+    needs_retesting: false
----+    status_history:
----+        - working: true
----+          agent: "testing"
----+          comment: "✅ GET /api/auth/me working correctly. Returns current user data when valid JWT token provided."
----+
----+  - task: "Video Feed API"
----+    implemented: true
----+    working: true
----+    file: "/app/backend/server.py"
----+    stuck_count: 0
----+    priority: "high"
----+    needs_retesting: false
----+    status_history:
----+        - working: true
----+          agent: "testing"
----+          comment: "✅ GET /api/videos/feed working correctly. Returns 5 sample videos with proper recommendation algorithm prioritizing unwatched videos."
----+
----+  - task: "Record Video View API"
----+    implemented: true
----+    working: true
----+    file: "/app/backend/server.py"
----+    stuck_count: 0
----+    priority: "medium"
----+    needs_retesting: false
----+    status_history:
----+        - working: true
----+          agent: "testing"
----+          comment: "✅ POST /api/videos/{video_id}/view working correctly. Records watch duration and increments view count."
----+
----+  - task: "Like Video API"
----+    implemented: true
----+    working: true
----+    file: "/app/backend/server.py"
----+    stuck_count: 0
----+    priority: "medium"
----+    needs_retesting: false
----+    status_history:
----+        - working: true
----+          agent: "testing"
----+          comment: "✅ POST /api/videos/{video_id}/like working correctly. Likes video and increments like count, prevents duplicate likes."
----+
----+  - task: "Unlike Video API"
----+    implemented: true
----+    working: true
----+    file: "/app/backend/server.py"
----+    stuck_count: 0
----+    priority: "medium"
----+    needs_retesting: false
----+    status_history:
----+        - working: true
----+          agent: "testing"
----+          comment: "✅ DELETE /api/videos/{video_id}/like working correctly. Unlikes video and decrements like count."
----+
----+  - task: "Get Video Comments API"
----+    implemented: true
----+    working: true
----+    file: "/app/backend/server.py"
----+    stuck_count: 0
----+    priority: "medium"
----+    needs_retesting: false
----+    status_history:
----+        - working: true
----+          agent: "testing"
----+          comment: "✅ GET /api/videos/{video_id}/comments working correctly. Returns list of comments for video with user information."
----+
----+  - task: "Create Comment API"
----+    implemented: true
----+    working: true
----+    file: "/app/backend/server.py"
----+    stuck_count: 0
----+    priority: "medium"
----+    needs_retesting: false
----+    status_history:
----+        - working: true
----+          agent: "testing"
----+          comment: "✅ POST /api/videos/{video_id}/comments working correctly. Creates comments associated with users and increments comment count."
----+
----+  - task: "Authentication Error Handling"
----+    implemented: true
----+    working: true
----+    file: "/app/backend/server.py"
----+    stuck_count: 0
----+    priority: "low"
----+    needs_retesting: false
----+    status_history:
----+        - working: false
----+          agent: "testing"
----+          comment: "❌ JWT error handling had AttributeError: module 'jwt' has no attribute 'JWTError' causing 500 errors for invalid tokens."
----+        - working: true
----+          agent: "testing"
----+          comment: "✅ Fixed JWT error handling by changing jwt.JWTError to jwt.InvalidTokenError. Now returns proper 401 for invalid tokens and 403 for missing tokens (correct HTTPBearer behavior)."
----+
----+frontend:
----+  # No frontend testing performed as per instructions
----+
----+metadata:
----+  created_by: "testing_agent"
----+  version: "1.0"
----+  test_sequence: 1
----+  run_ui: false
----+
----+test_plan:
----+  current_focus:
----+    - "All backend API endpoints tested and working"
----+  stuck_tasks: []
----+  test_all: true
----+  test_priority: "high_first"
----+
----+agent_communication:
----+    - agent: "testing"
----+      message: "Comprehensive backend API testing completed. All 9 core endpoints working correctly with 81.8% success rate. Minor authentication error handling issues identified but don't affect functionality. Sample videos pre-loaded, JWT authentication working, recommendation algorithm functional, like/unlike updating counts correctly, comments associated with users properly."
----+    - agent: "testing"
----+      message: "🔧 FIXED: JWT authentication error handling issue resolved. Changed jwt.JWTError to jwt.InvalidTokenError in server.py. All authentication scenarios now working correctly: 403 for missing tokens, 401 for invalid tokens, 200 for valid tokens. Backend testing 100% complete - all endpoints functional."
----\ No newline at end of file
+--@@ -1,225 +0,0 @@
+---diff --git a/frontend/components/CommentsModal.tsx b/frontend/components/CommentsModal.tsx
+---index 8b9bf35..f733b87 100644
+------ a/frontend/components/CommentsModal.tsx
+---+++ b/frontend/components/CommentsModal.tsx
+---@@ -179,26 +179,34 @@ const styles = StyleSheet.create({
+---   },
+---   backdrop: {
+---     flex: 1,
+----    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+---+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+---   },
+---   modalContent: {
+---     backgroundColor: '#1a1a1a',
+----    borderTopLeftRadius: 24,
+----    borderTopRightRadius: 24,
+----    maxHeight: '70%',
+---+    borderTopLeftRadius: 28,
+---+    borderTopRightRadius: 28,
+---+    maxHeight: '75%',
+---+    shadowColor: '#000',
+---+    shadowOffset: { width: 0, height: -4 },
+---+    shadowOpacity: 0.3,
+---+    shadowRadius: 16,
+---+    elevation: 24,
+---   },
+---   header: {
+---     flexDirection: 'row',
+---     justifyContent: 'space-between',
+---     alignItems: 'center',
+----    padding: 16,
+---+    paddingHorizontal: 20,
+---+    paddingTop: 20,
+---+    paddingBottom: 16,
+---     borderBottomWidth: 1,
+----    borderBottomColor: '#333',
+---+    borderBottomColor: '#2a2a2a',
+---   },
+---   headerTitle: {
+---     color: '#FFF',
+----    fontSize: 18,
+----    fontWeight: '600',
+---+    fontSize: 19,
+---+    fontWeight: 'bold',
+---+    letterSpacing: 0.3,
+---   },
+---   loadingContainer: {
+---     padding: 48,
+---diff --git a/model.patch b/model.patch
+---index 223bb22..e69de29 100644
+------ a/model.patch
+---+++ b/model.patch
+---@@ -1,173 +0,0 @@
+----diff --git a/backend/server.py b/backend/server.py
+----index 95615aa..990122b 100644
+------- a/backend/server.py
+----+++ b/backend/server.py
+----@@ -60,7 +60,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
+----         return user
+----     except jwt.ExpiredSignatureError:
+----         raise HTTPException(status_code=401, detail="Token has expired")
+-----    except jwt.JWTError:
+----+    except jwt.InvalidTokenError:
+----         raise HTTPException(status_code=401, detail="Could not validate credentials")
+---- 
+---- # Pydantic Models
+----diff --git a/test_result.md b/test_result.md
+----index 187cba4..14e6868 100644
+------- a/test_result.md
+----+++ b/test_result.md
+----@@ -100,4 +100,152 @@
+---- 
+---- #====================================================================================================
+---- # Testing Data - Main Agent and testing sub agent both should log testing data below this section
+-----#====================================================================================================
+----\ No newline at end of file
+----+#====================================================================================================
+----+
+----+user_problem_statement: "Test the Vyzo API backend for the short video app MVP with authentication, video feed, likes, and comments functionality"
+----+
+----+backend:
+----+  - task: "User Registration API"
+----+    implemented: true
+----+    working: true
+----+    file: "/app/backend/server.py"
+----+    stuck_count: 0
+----+    priority: "high"
+----+    needs_retesting: false
+----+    status_history:
+----+        - working: true
+----+          agent: "testing"
+----+          comment: "✅ POST /api/auth/register working correctly. Successfully registers users with email, password, username, bio and returns JWT token with user data."
+----+
+----+  - task: "User Login API"
+----+    implemented: true
+----+    working: true
+----+    file: "/app/backend/server.py"
+----+    stuck_count: 0
+----+    priority: "high"
+----+    needs_retesting: false
+----+    status_history:
+----+        - working: true
+----+          agent: "testing"
+----+          comment: "✅ POST /api/auth/login working correctly. Authenticates users and returns JWT token with user data."
+----+
+----+  - task: "Get Current User API"
+----+    implemented: true
+----+    working: true
+----+    file: "/app/backend/server.py"
+----+    stuck_count: 0
+----+    priority: "high"
+----+    needs_retesting: false
+----+    status_history:
+----+        - working: true
+----+          agent: "testing"
+----+          comment: "✅ GET /api/auth/me working correctly. Returns current user data when valid JWT token provided."
+----+
+----+  - task: "Video Feed API"
+----+    implemented: true
+----+    working: true
+----+    file: "/app/backend/server.py"
+----+    stuck_count: 0
+----+    priority: "high"
+----+    needs_retesting: false
+----+    status_history:
+----+        - working: true
+----+          agent: "testing"
+----+          comment: "✅ GET /api/videos/feed working correctly. Returns 5 sample videos with proper recommendation algorithm prioritizing unwatched videos."
+----+
+----+  - task: "Record Video View API"
+----+    implemented: true
+----+    working: true
+----+    file: "/app/backend/server.py"
+----+    stuck_count: 0
+----+    priority: "medium"
+----+    needs_retesting: false
+----+    status_history:
+----+        - working: true
+----+          agent: "testing"
+----+          comment: "✅ POST /api/videos/{video_id}/view working correctly. Records watch duration and increments view count."
+----+
+----+  - task: "Like Video API"
+----+    implemented: true
+----+    working: true
+----+    file: "/app/backend/server.py"
+----+    stuck_count: 0
+----+    priority: "medium"
+----+    needs_retesting: false
+----+    status_history:
+----+        - working: true
+----+          agent: "testing"
+----+          comment: "✅ POST /api/videos/{video_id}/like working correctly. Likes video and increments like count, prevents duplicate likes."
+----+
+----+  - task: "Unlike Video API"
+----+    implemented: true
+----+    working: true
+----+    file: "/app/backend/server.py"
+----+    stuck_count: 0
+----+    priority: "medium"
+----+    needs_retesting: false
+----+    status_history:
+----+        - working: true
+----+          agent: "testing"
+----+          comment: "✅ DELETE /api/videos/{video_id}/like working correctly. Unlikes video and decrements like count."
+----+
+----+  - task: "Get Video Comments API"
+----+    implemented: true
+----+    working: true
+----+    file: "/app/backend/server.py"
+----+    stuck_count: 0
+----+    priority: "medium"
+----+    needs_retesting: false
+----+    status_history:
+----+        - working: true
+----+          agent: "testing"
+----+          comment: "✅ GET /api/videos/{video_id}/comments working correctly. Returns list of comments for video with user information."
+----+
+----+  - task: "Create Comment API"
+----+    implemented: true
+----+    working: true
+----+    file: "/app/backend/server.py"
+----+    stuck_count: 0
+----+    priority: "medium"
+----+    needs_retesting: false
+----+    status_history:
+----+        - working: true
+----+          agent: "testing"
+----+          comment: "✅ POST /api/videos/{video_id}/comments working correctly. Creates comments associated with users and increments comment count."
+----+
+----+  - task: "Authentication Error Handling"
+----+    implemented: true
+----+    working: true
+----+    file: "/app/backend/server.py"
+----+    stuck_count: 0
+----+    priority: "low"
+----+    needs_retesting: false
+----+    status_history:
+----+        - working: false
+----+          agent: "testing"
+----+          comment: "❌ JWT error handling had AttributeError: module 'jwt' has no attribute 'JWTError' causing 500 errors for invalid tokens."
+----+        - working: true
+----+          agent: "testing"
+----+          comment: "✅ Fixed JWT error handling by changing jwt.JWTError to jwt.InvalidTokenError. Now returns proper 401 for invalid tokens and 403 for missing tokens (correct HTTPBearer behavior)."
+----+
+----+frontend:
+----+  # No frontend testing performed as per instructions
+----+
+----+metadata:
+----+  created_by: "testing_agent"
+----+  version: "1.0"
+----+  test_sequence: 1
+----+  run_ui: false
+----+
+----+test_plan:
+----+  current_focus:
+----+    - "All backend API endpoints tested and working"
+----+  stuck_tasks: []
+----+  test_all: true
+----+  test_priority: "high_first"
+----+
+----+agent_communication:
+----+    - agent: "testing"
+----+      message: "Comprehensive backend API testing completed. All 9 core endpoints working correctly with 81.8% success rate. Minor authentication error handling issues identified but don't affect functionality. Sample videos pre-loaded, JWT authentication working, recommendation algorithm functional, like/unlike updating counts correctly, comments associated with users properly."
+----+    - agent: "testing"
+----+      message: "🔧 FIXED: JWT authentication error handling issue resolved. Changed jwt.JWTError to jwt.InvalidTokenError in server.py. All authentication scenarios now working correctly: 403 for missing tokens, 401 for invalid tokens, 200 for valid tokens. Backend testing 100% complete - all endpoints functional."
+----\ No newline at end of file
