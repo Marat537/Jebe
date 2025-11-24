@@ -136,7 +136,7 @@ export default function FeedScreen() {
       />
 
       {selectedVideoId && (
-        <CommentsModal
+        <CommentsModalNew
           visible={commentsModalVisible}
           videoId={selectedVideoId}
           onClose={() => setCommentsModalVisible(false)}
