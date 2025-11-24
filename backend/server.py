@@ -100,12 +100,41 @@ class VideoResponse(BaseModel):
 
 class CommentCreate(BaseModel):
     text: str
+    image: Optional[str] = None  # base64 image
 
 class CommentResponse(BaseModel):
     id: str
     user_id: str
     username: str
     text: str
+    image: Optional[str] = None
+    likes_count: int
+    is_liked: bool
+    created_at: datetime
+
+class MessageCreate(BaseModel):
+    receiver_id: str
+    text: str
+    image: Optional[str] = None
+
+class MessageResponse(BaseModel):
+    id: str
+    sender_id: str
+    sender_username: str
+    receiver_id: str
+    text: str
+    image: Optional[str] = None
+    read: bool
+    created_at: datetime
+
+class NotificationResponse(BaseModel):
+    id: str
+    type: str  # 'follow', 'like', 'comment'
+    from_user_id: str
+    from_username: str
+    content: str
+    video_id: Optional[str] = None
+    read: bool
     created_at: datetime
 
 class WatchHistory(BaseModel):
