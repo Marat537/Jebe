@@ -84,19 +84,37 @@ export default function LoginScreen({ onSwitchToRegister }: LoginScreenProps) {
             focusedField === 'identifier' && styles.inputWrapperFocused
           ]}>
             <View style={styles.inputContainer}>
-              <Ionicons name="person-outline" size={20} color="#999" style={styles.inputIcon} />
+              <Ionicons 
+                name={loginMode === 'phone' ? 'call-outline' : 'mail-outline'} 
+                size={20} 
+                color="#999" 
+                style={styles.inputIcon} 
+              />
               <TextInput
                 style={styles.input}
-                placeholder="手机号码/Vyzo id 登陆"
+                placeholder={loginMode === 'phone' ? '手机号码登录' : '邮箱登录'}
                 placeholderTextColor="#999"
                 value={identifier}
                 onChangeText={setIdentifier}
+                keyboardType={loginMode === 'email' ? 'email-address' : 'phone-pad'}
                 autoCapitalize="none"
                 onFocus={() => setFocusedField('identifier')}
                 onBlur={() => setFocusedField(null)}
               />
             </View>
           </View>
+
+          <TouchableOpacity 
+            style={styles.switchModeButton}
+            onPress={toggleLoginMode}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.switchModeText}>
+              {loginMode === 'phone' 
+                ? '没有电话号码？没关系，用邮箱' 
+                : '没有邮箱？没关系，用电话号码'}
+            </Text>
+          </TouchableOpacity>
 
           <View style={[
             styles.inputWrapper,
