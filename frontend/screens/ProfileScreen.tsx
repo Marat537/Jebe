@@ -167,7 +167,11 @@ export default function ProfileScreen() {
             />
           </View>
 
-          <TouchableOpacity style={[styles.settingItem, { borderBottomColor: borderColor }]}>
+          <TouchableOpacity 
+            style={[styles.settingItem, { borderBottomColor: borderColor }]}
+            activeOpacity={0.7}
+            onPress={() => handleSettingPress('帮助与支持')}
+          >
             <View style={styles.settingLeft}>
               <Ionicons name="help-circle-outline" size={24} color={textColor} />
               <Text style={[styles.settingText, { color: textColor }]}>帮助与支持</Text>
