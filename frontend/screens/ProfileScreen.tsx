@@ -164,106 +164,111 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  menuButton: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   scrollContent: {
     paddingBottom: 32,
   },
-  header: {
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1a1a1a',
-  },
-  headerTitle: {
-    color: '#FFF',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  profileSection: {
+  profileHeader: {
     alignItems: 'center',
-    paddingVertical: 32,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1a1a1a',
+    paddingVertical: 24,
   },
   avatarContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#1a1a1a',
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
   },
   username: {
-    color: '#FFF',
-    fontSize: 24,
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 16,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  statItem: {
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  statNumber: {
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 4,
   },
-  email: {
-    color: '#666',
-    fontSize: 14,
-    marginBottom: 16,
+  statLabel: {
+    fontSize: 13,
   },
-  bio: {
-    color: '#CCC',
-    fontSize: 14,
-    textAlign: 'center',
-    paddingHorizontal: 32,
+  statDivider: {
+    width: 1,
+    height: 20,
+    backgroundColor: '#333',
   },
-  section: {
+  editBioButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: 8,
+  },
+  editBioText: {
+    fontSize: 13,
+    marginLeft: 6,
+  },
+  tabsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#333',
+  },
+  tab: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  settingsSection: {
     marginTop: 24,
+    marginHorizontal: 16,
+    borderRadius: 16,
+    overflow: 'hidden',
   },
-  sectionTitle: {
-    color: '#666',
-    fontSize: 12,
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    paddingHorizontal: 24,
-    marginBottom: 12,
-  },
-  menuItem: {
+  settingItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: '#0a0a0a',
     borderBottomWidth: 1,
-    borderBottomColor: '#1a1a1a',
   },
-  menuItemLeft: {
+  settingLeft: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  menuItemText: {
-    color: '#FFF',
+  settingText: {
     fontSize: 16,
     marginLeft: 16,
   },
-  logoutButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 24,
-    marginTop: 32,
-    paddingVertical: 16,
-    borderRadius: 12,
-    backgroundColor: '#1a1a1a',
-    borderWidth: 1,
-    borderColor: '#FF0050',
-  },
-  logoutButtonText: {
-    color: '#FF0050',
-    fontSize: 18,
-    fontWeight: '600',
-    marginLeft: 12,
-  },
   version: {
-    color: '#666',
     fontSize: 12,
     textAlign: 'center',
-    marginTop: 24,
+    marginTop: 32,
   },
 });
