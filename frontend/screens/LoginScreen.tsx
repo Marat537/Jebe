@@ -20,25 +20,32 @@ interface LoginScreenProps {
 
 export default function LoginScreen({ onSwitchToRegister }: LoginScreenProps) {
   const { login } = useAuth();
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+    if (!identifier || !password) {
+      Alert.alert('提示', '请填写所有字段');
       return;
     }
 
     setLoading(true);
     try {
-      await login(email, password);
+      await login(identifier, password);
     } catch (error: any) {
-      Alert.alert('Login Failed', error.message);
+      Alert.alert('登录失败', error.message);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleLogin = () => {
+    Alert.alert('即将推出', 'Google 登录功能正在开发中');
+  };
+
+  const handleAppleLogin = () => {
+    Alert.alert('即将推出', 'Apple ID 登录功能正在开发中');
   };
 
   return (
@@ -49,48 +56,36 @@ export default function LoginScreen({ onSwitchToRegister }: LoginScreenProps) {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
         <View style={styles.header}>
-          <Text style={styles.logo}>Vyzo</Text>
-          <Text style={styles.tagline}>Discover Amazing Short Videos</Text>
+          <Text style={styles.logoText}>登陆</Text>
+          <Text style={styles.brandName}>vyzo</Text>
+          <Text style={styles.slogan}>your world , your vyzo</Text>
         </View>
 
         <View style={styles.form}>
           <View style={styles.inputContainer}>
-            <Ionicons name="mail-outline" size={20} color="#999" style={styles.inputIcon} />
             <TextInput
               style={styles.input}
-              placeholder="Email"
+              placeholder="手机号码/Vyzo id 登陆"
               placeholderTextColor="#999"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
+              value={identifier}
+              onChangeText={setIdentifier}
               autoCapitalize="none"
-              autoComplete="email"
             />
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="lock-closed-outline" size={20} color="#999" style={styles.inputIcon} />
             <TextInput
               style={styles.input}
-              placeholder="Password"
+              placeholder="密码"
               placeholderTextColor="#999"
               value={password}
               onChangeText={setPassword}
-              secureTextEntry={!showPassword}
+              secureTextEntry
               autoCapitalize="none"
             />
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              style={styles.eyeIcon}
-            >
-              <Ionicons
-                name={showPassword ? 'eye-outline' : 'eye-off-outline'}
-                size={20}
-                color="#999"
-              />
-            </TouchableOpacity>
           </View>
 
           <TouchableOpacity
@@ -101,8 +96,30 @@ export default function LoginScreen({ onSwitchToRegister }: LoginScreenProps) {
             {loading ? (
               <ActivityIndicator color="#FFF" />
             ) : (
-              <Text style={styles.loginButtonText}>Login</Text>
+              <Text style={styles.loginButtonText}>登录</Text>
             )}
+          </TouchableOpacity>
+
+          <View style={styles.divider}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>或使用</Text>
+            <View style={styles.dividerLine} />
+          </View>
+
+          <TouchableOpacity
+            style={styles.socialButton}
+            onPress={handleGoogleLogin}
+          >
+            <Ionicons name="logo-google" size={24} color="#4285F4" />
+            <Text style={styles.socialButtonText}>Google 登陆</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.socialButton}
+            onPress={handleAppleLogin}
+          >
+            <Ionicons name="logo-apple" size={24} color="#000" />
+            <Text style={styles.socialButtonText}>Apple id 登陆</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -110,9 +127,14 @@ export default function LoginScreen({ onSwitchToRegister }: LoginScreenProps) {
             onPress={onSwitchToRegister}
           >
             <Text style={styles.registerLinkText}>
-              Don't have an account? <Text style={styles.registerLinkBold}>Sign Up</Text>
+              没有账号？！！<Text style={styles.registerLinkBold}>去注册一个！！！</Text>
             </Text>
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>这里放点app政策 和 版本</Text>
+          <Text style={styles.versionText}>版本 1.0.0</Text>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -122,72 +144,118 @@ export default function LoginScreen({ onSwitchToRegister }: LoginScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#F5F5F5',
   },
   scrollContent: {
     flexGrow: 1,
-    justifyContent: 'center',
     padding: 24,
+    paddingTop: 60,
   },
   header: {
     alignItems: 'center',
     marginBottom: 48,
   },
-  logo: {
-    fontSize: 48,
+  logoText: {
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#FF0050',
+    color: '#000',
     marginBottom: 8,
   },
-  tagline: {
+  brandName: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: '#000',
+    letterSpacing: 2,
+  },
+  slogan: {
     fontSize: 16,
-    color: '#999',
+    color: '#666',
+    marginTop: 8,
   },
   form: {
     width: '100%',
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#1a1a1a',
-    borderRadius: 12,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#5B4FFF',
     marginBottom: 16,
     paddingHorizontal: 16,
   },
-  inputIcon: {
-    marginRight: 12,
-  },
   input: {
-    flex: 1,
-    color: '#FFF',
+    color: '#000',
     fontSize: 16,
     paddingVertical: 16,
   },
-  eyeIcon: {
-    padding: 8,
-  },
   loginButton: {
-    backgroundColor: '#FF0050',
-    borderRadius: 12,
+    backgroundColor: '#5B4FFF',
+    borderRadius: 8,
     paddingVertical: 16,
     alignItems: 'center',
     marginTop: 8,
+    marginBottom: 24,
   },
   loginButtonText: {
     color: '#FFF',
     fontSize: 18,
     fontWeight: '600',
   },
+  divider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 24,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#DDD',
+  },
+  dividerText: {
+    color: '#999',
+    marginHorizontal: 16,
+    fontSize: 14,
+  },
+  socialButton: {
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#DDD',
+    paddingVertical: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  socialButtonText: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: '600',
+    marginLeft: 12,
+  },
   registerLink: {
     marginTop: 24,
     alignItems: 'center',
   },
   registerLinkText: {
-    color: '#999',
+    color: '#666',
     fontSize: 14,
   },
   registerLinkBold: {
-    color: '#FF0050',
+    color: '#5B4FFF',
     fontWeight: '600',
+  },
+  footer: {
+    marginTop: 48,
+    alignItems: 'center',
+  },
+  footerText: {
+    color: '#999',
+    fontSize: 12,
+    marginBottom: 8,
+  },
+  versionText: {
+    color: '#CCC',
+    fontSize: 12,
   },
 });
