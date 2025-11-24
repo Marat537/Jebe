@@ -49,11 +49,11 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="history"
+        name="messages"
         options={{
-          title: '相册历史',
+          title: '消息',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="folder-open" size={size} color={color} />
+            <Ionicons name="chatbubbles" size={size} color={color} />
           ),
         }}
       />
