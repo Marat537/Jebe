@@ -9,7 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import VideoPlayer from '../components/VideoPlayer';
-import CommentsModalNew from '../components/CommentsModalNew';
+import CommentsModal from '../components/CommentsModal';
 import VideoFeedHeader from '../components/VideoFeedHeader';
 import api from '../utils/api';
 
