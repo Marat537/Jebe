@@ -1,21 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme } from '../../contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function Messages() {
-  const { colors } = useTheme();
-  
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
-      <View style={[styles.header, { borderBottomColor: colors.border }]}>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>消息</Text>
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>消息</Text>
       </View>
       <View style={styles.content}>
-        <Ionicons name="chatbubbles-outline" size={80} color={colors.textSecondary} />
-        <Text style={[styles.title, { color: colors.text }]}>暂无消息</Text>
-        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>聊天和通知功能即将推出</Text>
+        <Ionicons name="chatbubbles-outline" size={80} color="#666" />
+        <Text style={styles.title}>暂无消息</Text>
+        <Text style={styles.subtitle}>聊天和通知功能即将推出</Text>
       </View>
     </SafeAreaView>
   );
