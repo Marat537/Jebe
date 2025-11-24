@@ -181,6 +181,7 @@ export default function ProfileScreen() {
 
           <TouchableOpacity 
             style={[styles.settingItem, { borderBottomWidth: 0 }]}
+            activeOpacity={0.7}
             onPress={handleLogout}
           >
             <View style={styles.settingLeft}>
