@@ -2,14 +2,17 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export default function Discover() {
+  const { colors } = useTheme();
+  
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>好友</Text>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
+      <View style={[styles.header, { borderBottomColor: colors.border }]}>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>好友</Text>
         <TouchableOpacity style={styles.addButton}>
-          <Ionicons name="person-add" size={24} color="#5B4FFF" />
+          <Ionicons name="person-add" size={24} color={colors.primary} />
         </TouchableOpacity>
       </View>
       
