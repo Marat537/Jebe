@@ -377,16 +377,25 @@ async def unlike_video(video_id: str, current_user = Depends(get_current_user)):
 # Comment Routes
 @api_router.get("/videos/{video_id}/comments", response_model=List[CommentResponse])
 async def get_comments(video_id: str, current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
     comments = await db.comments.find({"video_id": video_id}).sort("created_at", -1).to_list(1000)
     
     result = []
     for comment in comments:
         user = await db.users.find_one({"_id": ObjectId(comment["user_id"])})
+        comment_id = str(comment["_id"])
+        
+        # Check if user liked this comment
+        is_liked = await db.comment_likes.find_one({"user_id": user_id, "comment_id": comment_id}) is not None
+        
         result.append(CommentResponse(
-            id=str(comment["_id"]),
+            id=comment_id,
             user_id=comment["user_id"],
             username=user["username"] if user else "Unknown",
             text=comment["text"],
+            image=comment.get("image"),
+            likes_count=comment.get("likes_count", 0),
+            is_liked=is_liked,
             created_at=comment["created_at"]
         ))
     
