@@ -70,7 +70,7 @@ export default function ProfileScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.profileHeader}>
           <View style={[styles.avatarContainer, { borderColor: colors.border }]}>
-            <Ionicons name="person" size={60} color={secondaryTextColor} />
+            <Ionicons name="person" size={60} color={colors.textSecondary} />
           </View>
           
           <Text style={[styles.username, { color: colors.text }]}>@{user?.username || 'user123'}</Text>
@@ -97,7 +97,7 @@ export default function ProfileScreen() {
             activeOpacity={0.7}
             onPress={handleEditBio}
           >
-            <Ionicons name="add" size={16} color={secondaryTextColor} />
+            <Ionicons name="add" size={16} color={colors.textSecondary} />
             <Text style={[styles.editBioText, { color: colors.textSecondary }]}>
               添加个人简介 · 
               <Ionicons name="eye-outline" size={14} /> 
@@ -108,19 +108,19 @@ export default function ProfileScreen() {
 
         <View style={styles.tabsContainer}>
           <TouchableOpacity style={styles.tab} activeOpacity={0.7} onPress={() => handleTabPress('作品')}>
-            <Ionicons name="grid-outline" size={24} color={textColor} />
+            <Ionicons name="grid-outline" size={24} color={colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.tab} activeOpacity={0.7} onPress={() => handleTabPress('合集')}>
-            <Ionicons name="albums-outline" size={24} color={secondaryTextColor} />
+            <Ionicons name="albums-outline" size={24} color={colors.textSecondary} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.tab} activeOpacity={0.7} onPress={() => handleTabPress('转发')}>
-            <Ionicons name="repeat-outline" size={24} color={secondaryTextColor} />
+            <Ionicons name="repeat-outline" size={24} color={colors.textSecondary} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.tab} activeOpacity={0.7} onPress={() => handleTabPress('收藏')}>
-            <Ionicons name="bookmark-outline" size={24} color={secondaryTextColor} />
+            <Ionicons name="bookmark-outline" size={24} color={colors.textSecondary} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.tab} activeOpacity={0.7} onPress={() => handleTabPress('扫一扫')}>
-            <Ionicons name="scan-outline" size={24} color={secondaryTextColor} />
+            <Ionicons name="scan-outline" size={24} color={colors.textSecondary} />
           </TouchableOpacity>
         </View>
 
@@ -131,10 +131,10 @@ export default function ProfileScreen() {
             onPress={() => handleSettingPress('通知')}
           >
             <View style={styles.settingLeft}>
-              <Ionicons name="notifications-outline" size={24} color={textColor} />
+              <Ionicons name="notifications-outline" size={24} color={colors.text} />
               <Text style={[styles.settingText, { color: colors.text }]}>通知</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={secondaryTextColor} />
+            <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
           </TouchableOpacity>
 
           <TouchableOpacity 
@@ -143,20 +143,20 @@ export default function ProfileScreen() {
             onPress={() => handleSettingPress('隐私')}
           >
             <View style={styles.settingLeft}>
-              <Ionicons name="shield-checkmark-outline" size={24} color={textColor} />
+              <Ionicons name="shield-checkmark-outline" size={24} color={colors.text} />
               <Text style={[styles.settingText, { color: colors.text }]}>隐私</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={secondaryTextColor} />
+            <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
           </TouchableOpacity>
 
           <View style={[styles.settingItem, { borderBottomColor: borderColor }]}>
             <View style={styles.settingLeft}>
-              <Ionicons name="moon-outline" size={24} color={textColor} />
+              <Ionicons name="moon-outline" size={24} color={colors.text} />
               <Text style={[styles.settingText, { color: colors.text }]}>夜间模式</Text>
             </View>
             <Switch
               value={isDarkMode}
-              onValueChange={toggleDarkMode}
+              onValueChange={handleToggleTheme}
               trackColor={{ false: '#E8E8E8', true: '#5B4FFF' }}
               thumbColor="#FFF"
             />
@@ -168,10 +168,10 @@ export default function ProfileScreen() {
             onPress={() => handleSettingPress('帮助与支持')}
           >
             <View style={styles.settingLeft}>
-              <Ionicons name="help-circle-outline" size={24} color={textColor} />
+              <Ionicons name="help-circle-outline" size={24} color={colors.text} />
               <Text style={[styles.settingText, { color: colors.text }]}>帮助与支持</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={secondaryTextColor} />
+            <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
           </TouchableOpacity>
 
           <TouchableOpacity 
