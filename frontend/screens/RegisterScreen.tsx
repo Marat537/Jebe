@@ -23,21 +23,20 @@ export default function RegisterScreen({ onSwitchToLogin }: RegisterScreenProps)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [bio, setBio] = useState('');
+  const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = async () => {
     if (!email || !password || !username) {
-      Alert.alert('Error', 'Please fill in all required fields');
+      Alert.alert('提示', '请填写所有必填字段');
       return;
     }
 
     setLoading(true);
     try {
-      await register(email, password, username, bio);
+      await register(email, password, username, '');
     } catch (error: any) {
-      Alert.alert('Registration Failed', error.message);
+      Alert.alert('注册失败', error.message);
     } finally {
       setLoading(false);
     }
@@ -51,18 +50,19 @@ export default function RegisterScreen({ onSwitchToLogin }: RegisterScreenProps)
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
         <View style={styles.header}>
-          <Text style={styles.logo}>Vyzo</Text>
-          <Text style={styles.tagline}>Join the Community</Text>
+          <Text style={styles.logoText}>注册</Text>
+          <Text style={styles.brandName}>vyzo</Text>
+          <Text style={styles.slogan}>your world , your vyzo</Text>
         </View>
 
         <View style={styles.form}>
           <View style={styles.inputContainer}>
-            <Ionicons name="person-outline" size={20} color="#999" style={styles.inputIcon} />
             <TextInput
               style={styles.input}
-              placeholder="Username"
+              placeholder="用户名"
               placeholderTextColor="#999"
               value={username}
               onChangeText={setUsername}
@@ -71,10 +71,9 @@ export default function RegisterScreen({ onSwitchToLogin }: RegisterScreenProps)
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="mail-outline" size={20} color="#999" style={styles.inputIcon} />
             <TextInput
               style={styles.input}
-              placeholder="Email"
+              placeholder="邮箱"
               placeholderTextColor="#999"
               value={email}
               onChangeText={setEmail}
@@ -85,37 +84,25 @@ export default function RegisterScreen({ onSwitchToLogin }: RegisterScreenProps)
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="lock-closed-outline" size={20} color="#999" style={styles.inputIcon} />
             <TextInput
               style={styles.input}
-              placeholder="Password"
+              placeholder="手机号码 (可选)"
               placeholderTextColor="#999"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-              autoCapitalize="none"
+              value={phone}
+              onChangeText={setPhone}
+              keyboardType="phone-pad"
             />
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              style={styles.eyeIcon}
-            >
-              <Ionicons
-                name={showPassword ? 'eye-outline' : 'eye-off-outline'}
-                size={20}
-                color="#999"
-              />
-            </TouchableOpacity>
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="text-outline" size={20} color="#999" style={styles.inputIcon} />
             <TextInput
               style={styles.input}
-              placeholder="Bio (optional)"
+              placeholder="密码"
               placeholderTextColor="#999"
-              value={bio}
-              onChangeText={setBio}
-              multiline
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              autoCapitalize="none"
             />
           </View>
 
@@ -127,7 +114,7 @@ export default function RegisterScreen({ onSwitchToLogin }: RegisterScreenProps)
             {loading ? (
               <ActivityIndicator color="#FFF" />
             ) : (
-              <Text style={styles.registerButtonText}>Sign Up</Text>
+              <Text style={styles.registerButtonText}>注册账号</Text>
             )}
           </TouchableOpacity>
 
@@ -136,9 +123,13 @@ export default function RegisterScreen({ onSwitchToLogin }: RegisterScreenProps)
             onPress={onSwitchToLogin}
           >
             <Text style={styles.loginLinkText}>
-              Already have an account? <Text style={styles.loginLinkBold}>Login</Text>
+              已有账号？<Text style={styles.loginLinkBold}>去登录</Text>
             </Text>
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>注册即表示同意用户协议和隐私政策</Text>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -148,53 +139,53 @@ export default function RegisterScreen({ onSwitchToLogin }: RegisterScreenProps)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#F5F5F5',
   },
   scrollContent: {
     flexGrow: 1,
-    justifyContent: 'center',
     padding: 24,
+    paddingTop: 60,
   },
   header: {
     alignItems: 'center',
     marginBottom: 48,
   },
-  logo: {
-    fontSize: 48,
+  logoText: {
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#FF0050',
+    color: '#000',
     marginBottom: 8,
   },
-  tagline: {
+  brandName: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: '#000',
+    letterSpacing: 2,
+  },
+  slogan: {
     fontSize: 16,
-    color: '#999',
+    color: '#666',
+    marginTop: 8,
   },
   form: {
     width: '100%',
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#1a1a1a',
-    borderRadius: 12,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#5B4FFF',
     marginBottom: 16,
     paddingHorizontal: 16,
   },
-  inputIcon: {
-    marginRight: 12,
-  },
   input: {
-    flex: 1,
-    color: '#FFF',
+    color: '#000',
     fontSize: 16,
     paddingVertical: 16,
   },
-  eyeIcon: {
-    padding: 8,
-  },
   registerButton: {
-    backgroundColor: '#FF0050',
-    borderRadius: 12,
+    backgroundColor: '#5B4FFF',
+    borderRadius: 8,
     paddingVertical: 16,
     alignItems: 'center',
     marginTop: 8,
@@ -209,11 +200,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loginLinkText: {
-    color: '#999',
+    color: '#666',
     fontSize: 14,
   },
   loginLinkBold: {
-    color: '#FF0050',
+    color: '#5B4FFF',
     fontWeight: '600',
+  },
+  footer: {
+    marginTop: 48,
+    alignItems: 'center',
+  },
+  footerText: {
+    color: '#999',
+    fontSize: 12,
+    textAlign: 'center',
   },
 });

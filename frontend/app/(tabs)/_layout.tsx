@@ -9,27 +9,58 @@ export default function TabsLayout() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: '#000',
-          borderTopColor: '#1a1a1a',
+          borderTopColor: '#333',
           height: 60,
           paddingBottom: 8,
+          paddingTop: 4,
         },
-        tabBarActiveTintColor: '#FF0050',
+        tabBarActiveTintColor: '#5B4FFF',
         tabBarInactiveTintColor: '#666',
+        tabBarLabelStyle: {
+          fontSize: 11,
+        },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: '首页',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
+        name="discover"
+        options={{
+          title: '推荐视频',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="compass" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="upload"
+        options={{
+          title: '上传',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add-circle" size={size + 8} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="history"
+        options={{
+          title: '相册历史',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="folder-open" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: '个人',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),
