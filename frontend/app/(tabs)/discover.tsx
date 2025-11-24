@@ -18,10 +18,10 @@ export default function Discover() {
       
       <ScrollView style={styles.content}>
         <View style={styles.emptyState}>
-          <Ionicons name="people-outline" size={80} color="#666" />
-          <Text style={styles.emptyTitle}>还没有好友</Text>
-          <Text style={styles.emptySubtitle}>添加好友，查看他们的精彩视频</Text>
-          <TouchableOpacity style={styles.findFriendsButton}>
+          <Ionicons name="people-outline" size={80} color={colors.textSecondary} />
+          <Text style={[styles.emptyTitle, { color: colors.text }]}>还没有好友</Text>
+          <Text style={[styles.emptySubtitle, { color: colors.textSecondary }]}>添加好友，查看他们的精彩视频</Text>
+          <TouchableOpacity style={[styles.findFriendsButton, { backgroundColor: colors.primary }]}>
             <Ionicons name="search" size={20} color="#FFF" />
             <Text style={styles.findFriendsText}>发现好友</Text>
           </TouchableOpacity>
