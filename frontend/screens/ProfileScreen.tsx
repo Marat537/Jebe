@@ -59,14 +59,8 @@ export default function ProfileScreen() {
     Alert.alert(settingName, `${settingName}功能即将推出`);
   };
 
-  const bgColor = isDarkMode ? '#000' : '#FAFAFA';
-  const textColor = isDarkMode ? '#FFF' : '#000';
-  const secondaryTextColor = isDarkMode ? '#999' : '#666';
-  const cardBgColor = isDarkMode ? '#1a1a1a' : '#FFF';
-  const borderColor = isDarkMode ? '#333' : '#E8E8E8';
-
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: bgColor }]} edges={['top']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.menuButton} onPress={handleMenuPress} activeOpacity={0.7}>
           <Ionicons name="menu" size={28} color={textColor} />
