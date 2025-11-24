@@ -54,6 +54,12 @@ export default function LoginScreen({ onSwitchToRegister }: LoginScreenProps) {
     Alert.alert('即将推出', `${provider} 登录功能正在开发中`);
   };
 
+  const toggleLoginMode = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setLoginMode(loginMode === 'phone' ? 'email' : 'phone');
+    setIdentifier(''); // 清空输入框
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
