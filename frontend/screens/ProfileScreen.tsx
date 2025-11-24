@@ -63,7 +63,7 @@ export default function ProfileScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.menuButton} onPress={handleMenuPress} activeOpacity={0.7}>
-          <Ionicons name="menu" size={28} color={textColor} />
+          <Ionicons name="menu" size={28} color={colors.text} />
         </TouchableOpacity>
       </View>
 
