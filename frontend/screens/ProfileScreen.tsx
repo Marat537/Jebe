@@ -35,7 +35,16 @@ export default function ProfileScreen() {
 
   const handleToggleTheme = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    toggleTheme();
+    setIsDarkMode(!isDarkMode);
+  };
+  
+  const colors = {
+    background: isDarkMode ? '#000' : '#FAFAFA',
+    card: isDarkMode ? '#1a1a1a' : '#FFF',
+    text: isDarkMode ? '#FFF' : '#000',
+    textSecondary: isDarkMode ? '#999' : '#666',
+    border: isDarkMode ? '#333' : '#E8E8E8',
+    primary: '#5B4FFF',
   };
 
   const handleMenuPress = () => {
