@@ -38,6 +38,26 @@ export default function ProfileScreen() {
     setIsDarkMode(!isDarkMode);
   };
 
+  const handleMenuPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    Alert.alert('菜单', '菜单功能即将推出');
+  };
+
+  const handleEditBio = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    Alert.alert('编辑简介', '编辑个人简介功能即将推出');
+  };
+
+  const handleTabPress = (tabName: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    Alert.alert('标签', `${tabName}功能即将推出`);
+  };
+
+  const handleSettingPress = (settingName: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    Alert.alert(settingName, `${settingName}功能即将推出`);
+  };
+
   const bgColor = isDarkMode ? '#000' : '#FAFAFA';
   const textColor = isDarkMode ? '#FFF' : '#000';
   const secondaryTextColor = isDarkMode ? '#999' : '#666';
