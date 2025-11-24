@@ -69,36 +69,36 @@ export default function ProfileScreen() {
 
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.profileHeader}>
-          <View style={[styles.avatarContainer, { borderColor: borderColor }]}>
+          <View style={[styles.avatarContainer, { borderColor: colors.border }]}>
             <Ionicons name="person" size={60} color={secondaryTextColor} />
           </View>
           
-          <Text style={[styles.username, { color: textColor }]}>@{user?.username || 'user123'}</Text>
+          <Text style={[styles.username, { color: colors.text }]}>@{user?.username || 'user123'}</Text>
 
           <View style={styles.statsContainer}>
             <TouchableOpacity style={styles.statItem} activeOpacity={0.7} onPress={() => handleTabPress('关注')}>
-              <Text style={[styles.statNumber, { color: textColor }]}>0</Text>
-              <Text style={[styles.statLabel, { color: secondaryTextColor }]}>关注</Text>
+              <Text style={[styles.statNumber, { color: colors.text }]}>0</Text>
+              <Text style={[styles.statLabel, { color: colors.textSecondary }]}>关注</Text>
             </TouchableOpacity>
             <View style={styles.statDivider} />
             <TouchableOpacity style={styles.statItem} activeOpacity={0.7} onPress={() => handleTabPress('粉丝')}>
-              <Text style={[styles.statNumber, { color: textColor }]}>0</Text>
-              <Text style={[styles.statLabel, { color: secondaryTextColor }]}>粉丝</Text>
+              <Text style={[styles.statNumber, { color: colors.text }]}>0</Text>
+              <Text style={[styles.statLabel, { color: colors.textSecondary }]}>粉丝</Text>
             </TouchableOpacity>
             <View style={styles.statDivider} />
             <TouchableOpacity style={styles.statItem} activeOpacity={0.7} onPress={() => handleTabPress('赞')}>
-              <Text style={[styles.statNumber, { color: textColor }]}>0</Text>
-              <Text style={[styles.statLabel, { color: secondaryTextColor }]}>赞</Text>
+              <Text style={[styles.statNumber, { color: colors.text }]}>0</Text>
+              <Text style={[styles.statLabel, { color: colors.textSecondary }]}>赞</Text>
             </TouchableOpacity>
           </View>
 
           <TouchableOpacity 
-            style={[styles.editBioButton, { borderColor: borderColor }]} 
+            style={[styles.editBioButton, { borderColor: colors.border }]} 
             activeOpacity={0.7}
             onPress={handleEditBio}
           >
             <Ionicons name="add" size={16} color={secondaryTextColor} />
-            <Text style={[styles.editBioText, { color: secondaryTextColor }]}>
+            <Text style={[styles.editBioText, { color: colors.textSecondary }]}>
               添加个人简介 · 
               <Ionicons name="eye-outline" size={14} /> 
               我的账号主要关于...
@@ -124,7 +124,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
 
-        <View style={[styles.settingsSection, { backgroundColor: cardBgColor }]}>
+        <View style={[styles.settingsSection, { backgroundColor: colors.card }]}>
           <TouchableOpacity 
             style={[styles.settingItem, { borderBottomColor: borderColor }]}
             activeOpacity={0.7}
@@ -132,7 +132,7 @@ export default function ProfileScreen() {
           >
             <View style={styles.settingLeft}>
               <Ionicons name="notifications-outline" size={24} color={textColor} />
-              <Text style={[styles.settingText, { color: textColor }]}>通知</Text>
+              <Text style={[styles.settingText, { color: colors.text }]}>通知</Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color={secondaryTextColor} />
           </TouchableOpacity>
@@ -144,7 +144,7 @@ export default function ProfileScreen() {
           >
             <View style={styles.settingLeft}>
               <Ionicons name="shield-checkmark-outline" size={24} color={textColor} />
-              <Text style={[styles.settingText, { color: textColor }]}>隐私</Text>
+              <Text style={[styles.settingText, { color: colors.text }]}>隐私</Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color={secondaryTextColor} />
           </TouchableOpacity>
@@ -152,7 +152,7 @@ export default function ProfileScreen() {
           <View style={[styles.settingItem, { borderBottomColor: borderColor }]}>
             <View style={styles.settingLeft}>
               <Ionicons name="moon-outline" size={24} color={textColor} />
-              <Text style={[styles.settingText, { color: textColor }]}>夜间模式</Text>
+              <Text style={[styles.settingText, { color: colors.text }]}>夜间模式</Text>
             </View>
             <Switch
               value={isDarkMode}
@@ -169,7 +169,7 @@ export default function ProfileScreen() {
           >
             <View style={styles.settingLeft}>
               <Ionicons name="help-circle-outline" size={24} color={textColor} />
-              <Text style={[styles.settingText, { color: textColor }]}>帮助与支持</Text>
+              <Text style={[styles.settingText, { color: colors.text }]}>帮助与支持</Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color={secondaryTextColor} />
           </TouchableOpacity>
@@ -187,7 +187,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
 
-        <Text style={[styles.version, { color: secondaryTextColor }]}>Vyzo v1.0.0</Text>
+        <Text style={[styles.version, { color: colors.textSecondary }]}>Vyzo v1.0.0</Text>
       </ScrollView>
     </SafeAreaView>
   );
