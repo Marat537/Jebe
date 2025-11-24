@@ -18,6 +18,9 @@ interface Comment {
   id: string;
   username: string;
   text: string;
+  image?: string;
+  likes_count: number;
+  is_liked: boolean;
   created_at: string;
 }
 
