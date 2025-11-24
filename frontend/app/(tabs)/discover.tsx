@@ -2,26 +2,23 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../../contexts/ThemeContext';
 
 export default function Discover() {
-  const { colors } = useTheme();
-  
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
-      <View style={[styles.header, { borderBottomColor: colors.border }]}>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>好友</Text>
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>好友</Text>
         <TouchableOpacity style={styles.addButton}>
-          <Ionicons name="person-add" size={24} color={colors.primary} />
+          <Ionicons name="person-add" size={24} color="#5B4FFF" />
         </TouchableOpacity>
       </View>
       
       <ScrollView style={styles.content}>
         <View style={styles.emptyState}>
-          <Ionicons name="people-outline" size={80} color={colors.textSecondary} />
-          <Text style={[styles.emptyTitle, { color: colors.text }]}>还没有好友</Text>
-          <Text style={[styles.emptySubtitle, { color: colors.textSecondary }]}>添加好友，查看他们的精彩视频</Text>
-          <TouchableOpacity style={[styles.findFriendsButton, { backgroundColor: colors.primary }]}>
+          <Ionicons name="people-outline" size={80} color="#666" />
+          <Text style={styles.emptyTitle}>还没有好友</Text>
+          <Text style={styles.emptySubtitle}>添加好友，查看他们的精彩视频</Text>
+          <TouchableOpacity style={styles.findFriendsButton}>
             <Ionicons name="search" size={20} color="#FFF" />
             <Text style={styles.findFriendsText}>发现好友</Text>
           </TouchableOpacity>
