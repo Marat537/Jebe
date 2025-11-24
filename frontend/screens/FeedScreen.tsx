@@ -104,6 +104,10 @@ export default function FeedScreen() {
     />
   );
 
+  const handleSearchPress = () => {
+    Alert.alert('搜索', '搜索功能即将推出');
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -121,9 +125,14 @@ export default function FeedScreen() {
           <RefreshControl
             refreshing={loading}
             onRefresh={loadVideos}
-            tintColor="#FF0050"
+            tintColor="#5B4FFF"
           />
         }
+      />
+
+      <VideoFeedHeader
+        onMenuPress={() => {}}
+        onSearchPress={handleSearchPress}
       />
 
       {selectedVideoId && (
