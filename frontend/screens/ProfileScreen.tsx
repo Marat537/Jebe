@@ -16,6 +16,7 @@ import * as Haptics from 'expo-haptics';
 
 export default function ProfileScreen() {
   const { user, logout } = useAuth();
+  const router = useRouter();
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   const handleLogout = () => {
