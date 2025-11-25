@@ -44,7 +44,7 @@ export default function VideoFeedHeader({ onMenuPress }: VideoFeedHeaderProps) {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.searchButton} onPress={onSearchPress}>
+        <TouchableOpacity style={styles.searchButton} onPress={handleSearchPress}>
           <Ionicons name="search" size={24} color="#FFF" />
         </TouchableOpacity>
       </View>
