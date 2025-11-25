@@ -137,6 +137,20 @@ class NotificationResponse(BaseModel):
     read: bool
     created_at: datetime
 
+class SearchHistoryResponse(BaseModel):
+    id: str
+    keyword: str
+    created_at: datetime
+
+class HotSearchResponse(BaseModel):
+    keyword: str
+    count: int
+
+class SearchResultResponse(BaseModel):
+    videos: List[VideoResponse]
+    users: List[UserResponse]
+    total_count: int
+
 class WatchHistory(BaseModel):
     video_id: str
     watch_duration: float
