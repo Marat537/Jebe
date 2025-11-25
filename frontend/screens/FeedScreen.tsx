@@ -104,10 +104,6 @@ export default function FeedScreen() {
     />
   );
 
-  const handleSearchPress = () => {
-    Alert.alert('搜索', '搜索功能即将推出');
-  };
-
   return (
     <View style={styles.container}>
       <FlatList
@@ -130,10 +126,7 @@ export default function FeedScreen() {
         }
       />
 
-      <VideoFeedHeader
-        onMenuPress={() => {}}
-        onSearchPress={handleSearchPress}
-      />
+      <VideoFeedHeader onMenuPress={() => {}} />
 
       {selectedVideoId && (
         <CommentsModal
