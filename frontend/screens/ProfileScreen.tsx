@@ -142,6 +142,18 @@ export default function ProfileScreen() {
           <TouchableOpacity 
             style={[styles.settingItem, { borderBottomColor: colors.border }]}
             activeOpacity={0.7}
+            onPress={() => handleSettingPress('设置')}
+          >
+            <View style={styles.settingLeft}>
+              <Ionicons name="settings-outline" size={24} color={colors.text} />
+              <Text style={[styles.settingText, { color: colors.text }]}>设置</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={[styles.settingItem, { borderBottomColor: colors.border }]}
+            activeOpacity={0.7}
             onPress={() => handleSettingPress('通知')}
           >
             <View style={styles.settingLeft}>
