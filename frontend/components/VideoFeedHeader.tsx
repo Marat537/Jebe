@@ -15,8 +15,13 @@ interface VideoFeedHeaderProps {
   onMenuPress: () => void;
 }
 
-export default function VideoFeedHeader({ onMenuPress, onSearchPress }: VideoFeedHeaderProps) {
+export default function VideoFeedHeader({ onMenuPress }: VideoFeedHeaderProps) {
+  const router = useRouter();
   const [menuVisible, setMenuVisible] = useState(false);
+  
+  const handleSearchPress = () => {
+    router.push('/search');
+  };
 
   const menuItems = [
     { icon: 'settings-outline', title: '设置', onPress: () => console.log('设置') },
