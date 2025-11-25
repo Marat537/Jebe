@@ -632,6 +632,124 @@ async def unfollow_user(user_id: str, current_user = Depends(get_current_user)):
     
     return {"success": True}
 
+# Search Routes
+@api_router.post("/search/history")
+async def save_search_history(keyword: str, current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
+    
+    # Save search history
+    await db.search_history.insert_one({
+        "_id": ObjectId(),
+        "user_id": user_id,
+        "keyword": keyword,
+        "created_at": datetime.utcnow()
+    })
+    
+    # Update global hot search count
+    await db.hot_searches.update_one(
+        {"keyword": keyword},
+        {"$inc": {"count": 1}, "$set": {"updated_at": datetime.utcnow()}},
+        upsert=True
+    )
+    
+    return {"success": True}
+
+@api_router.get("/search/history", response_model=List[SearchHistoryResponse])
+async def get_search_history(current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
+    
+    history = await db.search_history.find({"user_id": user_id}).sort("created_at", -1).limit(10).to_list(10)
+    
+    return [SearchHistoryResponse(
+        id=str(h["_id"]),
+        keyword=h["keyword"],
+        created_at=h["created_at"]
+    ) for h in history]
+
+@api_router.delete("/search/history/{history_id}")
+async def delete_search_history(history_id: str, current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
+    
+    result = await db.search_history.delete_one({"_id": ObjectId(history_id), "user_id": user_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="History not found")
+    
+    return {"success": True}
+
+@api_router.delete("/search/history")
+async def clear_search_history(current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
+    
+    await db.search_history.delete_many({"user_id": user_id})
+    
+    return {"success": True}
+
+@api_router.get("/search/hot", response_model=List[HotSearchResponse])
+async def get_hot_searches():
+    hot_searches = await db.hot_searches.find().sort("count", -1).limit(10).to_list(10)
+    
+    return [HotSearchResponse(
+        keyword=h["keyword"],
+        count=h["count"]
+    ) for h in hot_searches]
+
+@api_router.get("/search", response_model=SearchResultResponse)
+async def search(keyword: str, category: str = "all", current_user = Depends(get_current_user)):
+    user_id = str(current_user["_id"])
+    
+    videos = []
+    users = []
+    
+    if category in ["all", "video"]:
+        # Search videos
+        video_results = await db.videos.find({
+            "$or": [
+                {"title": {"$regex": keyword, "$options": "i"}},
+                {"author": {"$regex": keyword, "$options": "i"}}
+            ]
+        }).limit(20).to_list(20)
+        
+        for video in video_results:
+            video_id = str(video["_id"])
+            is_liked = await db.likes.find_one({"user_id": user_id, "video_id": video_id}) is not None
+            
+            videos.append(VideoResponse(
+                id=video_id,
+                video_url=video["video_url"],
+                title=video["title"],
+                author=video["author"],
+                likes_count=video["likes_count"],
+                comments_count=video["comments_count"],
+                views=video["views"],
+                created_at=video["created_at"],
+                is_liked=is_liked
+            ))
+    
+    if category in ["all", "user"]:
+        # Search users
+        user_results = await db.users.find({
+            "$or": [
+                {"username": {"$regex": keyword, "$options": "i"}},
+                {"email": {"$regex": keyword, "$options": "i"}}
+            ]
+        }).limit(20).to_list(20)
+        
+        for u in user_results:
+            users.append(UserResponse(
+                id=str(u["_id"]),
+                email=u["email"],
+                username=u["username"],
+                bio=u.get("bio", ""),
+                avatar=u.get("avatar"),
+                created_at=u["created_at"]
+            ))
+    
+    return SearchResultResponse(
+        videos=videos,
+        users=users,
+        total_count=len(videos) + len(users)
+    )
+
 @api_router.get("/")
 async def root():
     return {"message": "Vyzo API v1.0"}
