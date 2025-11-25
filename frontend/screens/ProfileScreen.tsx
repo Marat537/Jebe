@@ -64,7 +64,11 @@ export default function ProfileScreen() {
 
   const handleSettingPress = (settingName: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    Alert.alert(settingName, `${settingName}功能即将推出`);
+    if (settingName === '设置') {
+      router.push('/settings');
+    } else {
+      Alert.alert(settingName, `${settingName}功能即将推出`);
+    }
   };
 
   return (
