@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 
 interface VideoFeedHeaderProps {
   onMenuPress: () => void;
-  onSearchPress: () => void;
 }
 
 export default function VideoFeedHeader({ onMenuPress, onSearchPress }: VideoFeedHeaderProps) {
